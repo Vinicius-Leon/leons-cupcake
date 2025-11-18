@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Pedidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- LOADING -->
+  <div class="loading-container" *ngIf="carregando">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando pedidos...</p>
+  </div>
+
+  <!-- LISTA DE PEDIDOS -->
+  <ion-list *ngIf="!carregando && pedidos.length > 0; else vazio">
+    <ion-card *ngFor="let p of pedidos" class="pedido-card">
+      <ion-card-header>
+        <ion-card-title>Pedido #{{ p.id_pedido }}</ion-card-title>
+        <ion-card-subtitle>
+          {{ p.data_pedido | date:'dd/MM/yyyy HH:mm' }}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p><strong>Status:</strong> {{ p.status }}</p>
+        <p><strong>Total:</strong> R$ {{ p.valor_total }}</p>
+
+        <ion-button
+          expand="block"
+          fill="outline"
+          routerLink="/pedido/{{ p.id_pedido }}"
+        >
+          Ver detalhes
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <!-- SE NÃO TIVER PEDIDOS -->
+  <ng-template #vazio>
+    <div class="vazio-container">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <p>Você ainda não tem pedidos.</p>
+    </div>
+  </ng-template>
+
+</ion-content>

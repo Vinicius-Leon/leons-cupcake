@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Criar Conta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="logo-container">
+    <ion-avatar>
+      <img src="assets/logo.png" />
+    </ion-avatar>
+  </div>
+
+  <ion-card class="register-card">
+
+    <ion-card-header>
+      <ion-card-title>Bem-vindo!</ion-card-title>
+      <ion-card-subtitle>Preencha os dados para criar sua conta</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+
+  <!-- Nome -->
+  <ion-item>
+    <ion-input
+      label="Nome"
+      labelPlacement="floating"
+      [(ngModel)]="nome"
+    ></ion-input>
+  </ion-item>
+
+  <!-- Sobrenome (opcional) -->
+  <ion-item>
+    <ion-input
+      label="Sobrenome (opcional)"
+      labelPlacement="floating"
+      [(ngModel)]="sobrenome"
+    ></ion-input>
+  </ion-item>
+
+  <!-- Email -->
+  <ion-item>
+    <ion-input
+      type="email"
+      label="Email"
+      labelPlacement="floating"
+      [(ngModel)]="email"
+    ></ion-input>
+  </ion-item>
+
+  <!-- CPF -->
+  <ion-item>
+    <ion-input
+      label="CPF"
+      labelPlacement="floating"
+      [(ngModel)]="cpf"
+      (ionInput)="formatarCPF()"
+      maxlength="14"
+    ></ion-input>
+  </ion-item>
+
+  <!-- Telefone -->
+  <ion-item>
+    <ion-input
+      label="Telefone"
+      labelPlacement="floating"
+      [(ngModel)]="telefone"
+      (ionInput)="formatarTelefone()"
+      maxlength="15"
+    ></ion-input>
+  </ion-item>
+
+  <!-- Senha -->
+  <ion-item>
+    <ion-input
+      [type]="showPassword ? 'text' : 'password'"
+      label="Senha"
+      labelPlacement="floating"
+      [(ngModel)]="senha"
+    ></ion-input>
+
+    <ion-button fill="clear" slot="end" (click)="togglePassword()">
+      <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <!-- Confirmar Senha -->
+  <ion-item>
+    <ion-input
+      [type]="showConfirmPassword ? 'text' : 'password'"
+      label="Confirmar senha"
+      labelPlacement="floating"
+      [(ngModel)]="confirmar"
+    ></ion-input>
+
+    <ion-button fill="clear" slot="end" (click)="toggleConfirmPassword()">
+      <ion-icon [name]="showConfirmPassword ? 'eye-off' : 'eye'"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <!-- Botão Criar Conta -->
+  <ion-button
+    expand="block"
+    color="success"
+    [disabled]="carregando"
+    (click)="register()"
+    class="btn-criar"
+  >
+    <ion-spinner *ngIf="carregando" name="crescent"></ion-spinner>
+    <span *ngIf="!carregando">Criar Conta</span>
+  </ion-button>
+
+  <ion-button expand="block" fill="clear" routerLink="/login">
+    Já tenho conta
+  </ion-button>
+
+</ion-card-content>

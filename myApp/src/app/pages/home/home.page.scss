@@ -1,0 +1,239 @@
+// Badge do carrinho no header
+ion-toolbar {
+  ion-button {
+    position: relative;
+    
+    ion-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.65rem;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+    }
+  }
+}
+
+// Menu lateral
+.user-info {
+  padding: 16px;
+  
+  ion-avatar {
+    width: 50px;
+    height: 50px;
+    
+    ion-icon {
+      font-size: 40px;
+    }
+  }
+  
+  ion-badge {
+    margin-top: 6px;
+  }
+}
+
+// Botões de acesso rápido
+.quick-access-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  
+  ion-button {
+    flex: 1;
+    min-width: 100px;
+    position: relative;
+    
+    .cart-badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      font-size: 0.65rem;
+      min-width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+// Loading
+.loading-container {
+  text-align: center;
+  margin-top: 100px;
+  
+  ion-spinner {
+    width: 50px;
+    height: 50px;
+  }
+  
+  p {
+    margin-top: 16px;
+    color: #666;
+    font-size: 1rem;
+  }
+}
+
+// Container vazio
+.vazio-container {
+  text-align: center;
+  margin-top: 80px;
+  padding: 20px;
+  color: #666;
+  
+  ion-icon {
+    font-size: 100px;
+    color: #0079bf;
+    opacity: 0.5;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 1.4rem;
+    color: #003B73;
+    margin: 0 0 10px 0;
+  }
+  
+  p {
+    font-size: 1rem;
+    margin: 0;
+    color: #777;
+  }
+}
+
+// Cards de produtos
+.produto-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0 0 16px 0;
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:active {
+    transform: translateY(-2px);
+  }
+}
+
+.produto-image-container {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .badge-destaque {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  
+  .badge-estoque {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+}
+
+ion-card-header {
+  padding: 12px 12px 8px 12px;
+  
+  ion-card-title {
+    font-size: 1rem;
+    color: #003b73;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    min-height: 2.6em; // 2 linhas
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+  
+  ion-card-subtitle {
+    color: #0079bf;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 4px;
+  }
+}
+
+ion-card-content {
+  padding: 8px 12px 12px 12px;
+  
+  p {
+    margin: 0 0 12px 0;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+    min-height: 3.4em; // ~3 linhas
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+  
+  ion-button {
+    margin-top: 8px;
+    font-weight: 600;
+  }
+}
+
+// Responsividade
+@media (max-width: 576px) {
+  .quick-access-buttons ion-button {
+    font-size: 0.85rem;
+    
+    ion-icon {
+      font-size: 1rem;
+    }
+  }
+  
+  .produto-image-container {
+    height: 140px;
+  }
+  
+  ion-card-header ion-card-title {
+    font-size: 0.9rem;
+  }
+  
+  ion-card-content p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .quick-access-buttons {
+    max-width: 600px;
+  }
+  
+  .produto-image-container {
+    height: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .produto-image-container {
+    height: 220px;
+  }
+}

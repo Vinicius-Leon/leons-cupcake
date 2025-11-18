@@ -1,0 +1,19 @@
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0 20px;
+
+  img {
+    width: 150px;
+    height: auto;
+  }
+}
+
+ion-card {
+  border-radius: 18px;
+  padding-bottom: 10px;
+}
+
+.login-btn {
+  margin-top: 20px;
+}

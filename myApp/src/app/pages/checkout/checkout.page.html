@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Endereço de entrega -->
+  <ion-item>
+    <ion-input 
+      placeholder="Endereço de entrega" 
+      [(ngModel)]="endereco"
+      required
+    ></ion-input>
+  </ion-item>
+
+  <!-- Método de pagamento -->
+  <ion-item>
+    <ion-label>Método de pagamento</ion-label>
+    <ion-select [(ngModel)]="metodo" required>
+      <ion-select-option value="pix">PIX</ion-select-option>
+      <ion-select-option value="cartao">Cartão</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Botão para finalizar pedido -->
+  <ion-button 
+    expand="block" 
+    color="success" 
+    (click)="pagar()"
+    [disabled]="carregando"
+  >
+    <ion-spinner *ngIf="carregando" name="crescent"></ion-spinner>
+    <span *ngIf="!carregando">Pagar e Finalizar</span>
+  </ion-button>
+
+</ion-content>

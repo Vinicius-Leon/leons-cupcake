@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Entregas 🚚</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Carregando Entregas -->
+  <div *ngIf="carregando" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando entregas...</p>
+  </div>
+
+  <!-- Lista de Entregas -->
+  <ion-list *ngIf="!carregando && entregas.length > 0; else semEntregas">
+    <ion-item *ngFor="let entrega of entregas" (click)="verDetalhes(entrega)">
+      <ion-label>
+        <h2>Entrega #{{ entrega.id }}</h2>
+        <p>{{ entrega.endereco }}</p>
+        <p>{{ entrega.data }}</p>
+
+        <ion-badge
+          [color]="entrega.status === 'A caminho' ? 'warning' : entrega.status === 'Finalizada' ? 'success' : 'danger'"
+        >
+          {{ entrega.status }}
+        </ion-badge>
+      </ion-label>
+
+      <ion-button slot="end" fill="clear" (click)="atualizarStatus(entrega)">
+        <ion-icon name="sync-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Template para quando não houver entregas -->
+  <ng-template #semEntregas>
+    <div class="vazio">
+      <ion-icon name="bicycle-outline" style="font-size: 60px; opacity: 0.6;"></ion-icon>
+      <p>Nenhuma entrega encontrada.</p>
+    </div>
+  </ng-template>
+
+</ion-content>

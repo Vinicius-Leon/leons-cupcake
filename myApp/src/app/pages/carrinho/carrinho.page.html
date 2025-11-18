@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Carrinho</ion-title>
+    <ion-buttons slot="end" *ngIf="itens.length > 0">
+      <ion-button (click)="limparCarrinho()">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="itens.length > 0; else vazio">
+    <ion-card *ngFor="let item of itens; let i = index" class="item-card">
+      <ion-card-content>
+        <div class="item-container">
+          <div class="item-image">
+            <img [src]="item.imagem_principal_url" [alt]="item.nome">
+          </div>
+
+          <div class="item-info">
+            <h2>{{ item.nome }}</h2>
+            <p class="preco-unitario">R$ {{ item.preco | number:'1.2-2' }}</p>
+            
+            <div class="quantidade-controls">
+              <ion-button 
+                size="small" 
+                fill="outline" 
+                (click)="diminuir(item)"
+                [disabled]="carregando">
+                <ion-icon slot="icon-only" name="remove"></ion-icon>
+              </ion-button>
+              
+              <span class="quantidade">{{ item.quantidade }}</span>
+              
+              <ion-button 
+                size="small" 
+                fill="outline" 
+                (click)="aumentar(item)"
+                [disabled]="carregando">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
+            </div>
+
+            <p class="subtotal">
+              <strong>Subtotal:</strong> R$ {{ subtotal(item) | number:'1.2-2' }}
+            </p>
+          </div>
+
+          <div class="item-actions">
+            <ion-button 
+              fill="clear" 
+              color="danger" 
+              (click)="remover(i)"
+              [disabled]="carregando">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="total-card">
+      <ion-card-content>
+        <div class="total-container">
+          <div class="total-info">
+            <span class="total-label">Total:</span>
+            <span class="total-valor">R$ {{ total() | number:'1.2-2' }}</span>
+          </div>
+          
+          <ion-button 
+            expand="block" 
+            color="success" 
+            (click)="finalizarCompra()"
+            [disabled]="carregando"
+            class="btn-finalizar">
+            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+            Finalizar Compra
+          </ion-button>
+
+          <ion-button 
+            expand="block" 
+            fill="outline" 
+            (click)="continuarComprando()"
+            [disabled]="carregando">
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            Continuar Comprando
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ng-template #vazio>
+    <div class="carrinho-vazio">
+      <ion-icon name="cart-outline"></ion-icon>
+      <h2>Seu carrinho está vazio</h2>
+      <p>Adicione produtos para começar suas compras</p>
+      <ion-button routerLink="/home" color="primary" expand="block">
+        <ion-icon slot="start" name="home-outline"></ion-icon>
+        Ver Produtos
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-content>

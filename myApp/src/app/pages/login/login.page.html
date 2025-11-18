@@ -1,0 +1,51 @@
+<ion-content class="ion-padding">
+
+  <div class="logo-container">
+    <img src="assets/logo.png" alt="Logo">
+  </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Bem-vindo</ion-card-title>
+      <ion-card-subtitle>Faça login para continuar</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-input
+          label="E-mail"
+          labelPlacement="floating"
+          type="email"
+          [(ngModel)]="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Senha"
+          labelPlacement="floating"
+          type="password"
+          [(ngModel)]="senha"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        class="login-btn"
+        [disabled]="loading"
+        (click)="login()"
+      >
+        <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+        <span *ngIf="!loading">Entrar</span>
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="clear"
+        routerLink="/register"
+      >
+        Criar conta
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

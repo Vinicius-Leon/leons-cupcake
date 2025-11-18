@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- LOADING -->
+  <div class="loading" *ngIf="carregando">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <!-- USUÁRIO LOGADO -->
+  <ion-card *ngIf="!carregando && user; else anonimo" class="perfil-card">
+
+    <div class="avatar-container">
+      <ion-avatar>
+        <img src="assets/avatar-default.png" alt="Avatar">
+      </ion-avatar>
+    </div>
+
+    <ion-card-header>
+      <ion-card-title>{{ user.nome }}</ion-card-title>
+      <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Telefone:</strong> {{ user.telefone || 'Não informado' }}</p>
+      <p><strong>CPF:</strong> {{ user.cpf || 'Não informado' }}</p>
+      <p><strong>Tipo de conta:</strong> {{ user.tipo_usuario }}</p>
+
+      <ion-button expand="block" fill="clear" color="primary">
+        Editar Perfil
+      </ion-button>
+
+      <ion-button expand="block" color="danger" (click)="logout()">
+        Sair da conta
+      </ion-button>
+    </ion-card-content>
+
+  </ion-card>
+
+  <!-- NÃO AUTENTICADO -->
+  <ng-template #anonimo>
+    <div class="anon-container">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <p>Você não está autenticado.</p>
+      <ion-button routerLink="/login">Fazer login</ion-button>
+    </div>
+  </ng-template>
+
+</ion-content>

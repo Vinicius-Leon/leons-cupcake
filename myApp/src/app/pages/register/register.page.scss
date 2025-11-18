@@ -1,0 +1,27 @@
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+
+  ion-avatar {
+    width: 110px;
+    height: 110px;
+    border: 3px solid #0079BF;
+    border-radius: 50%;
+  }
+}
+
+.register-card {
+  margin-top: 20px;
+  border-radius: 18px;
+  padding-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+ion-item {
+  margin-top: 10px;
+}
+
+.btn-criar {
+  margin-top: 20px;
+}

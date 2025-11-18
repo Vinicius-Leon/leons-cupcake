@@ -1,0 +1,180 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="abrirMenu()">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Leons Cupcake</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="verCarrinho()">
+        <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
+        <ion-badge *ngIf="quantidadeCarrinho > 0" color="danger">
+          {{ quantidadeCarrinho }}
+        </ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu side="start" menuId="main-menu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>
+      <!-- Informações do usuário -->
+      <ion-item *ngIf="usuario" lines="none" class="user-info">
+        <ion-avatar slot="start">
+          <ion-icon name="person-circle"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ usuario.nome }}</h2>
+          <p>{{ usuario.email }}</p>
+          <ion-badge [color]="isAdmin ? 'danger' : isEntregador ? 'warning' : 'primary'">
+            {{ usuario.tipo_usuario }}
+          </ion-badge>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>Navegação</ion-label>
+      </ion-item-divider>
+
+      <!-- Opções para TODOS -->
+      <ion-item button routerLink="/home" routerDirection="root" (click)="menuCtrl.close()">
+        <ion-icon slot="start" name="home-outline"></ion-icon>
+        <ion-label>Início</ion-label>
+      </ion-item>
+
+      <ion-item button routerLink="/carrinho" routerDirection="forward" (click)="menuCtrl.close()">
+        <ion-icon slot="start" name="cart-outline"></ion-icon>
+        <ion-label>Carrinho</ion-label>
+        <ion-badge slot="end" *ngIf="quantidadeCarrinho > 0" color="danger">
+          {{ quantidadeCarrinho }}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item button routerLink="/pedidos" routerDirection="forward" (click)="menuCtrl.close()">
+        <ion-icon slot="start" name="receipt-outline"></ion-icon>
+        <ion-label>Meus Pedidos</ion-label>
+      </ion-item>
+
+      <ion-item button routerLink="/perfil" routerDirection="forward" (click)="menuCtrl.close()">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-label>Meu Perfil</ion-label>
+      </ion-item>
+
+      <!-- Opção apenas para ENTREGADORES -->
+      <ion-item button routerLink="/entrega" routerDirection="forward" *ngIf="isEntregador" (click)="menuCtrl.close()">
+        <ion-icon slot="start" name="bicycle-outline" color="warning"></ion-icon>
+        <ion-label color="warning">Entregas</ion-label>
+      </ion-item>
+
+      <!-- Opção apenas para ADMIN -->
+      <ion-item button routerLink="/admin" routerDirection="forward" *ngIf="isAdmin" (click)="menuCtrl.close()">
+        <ion-icon slot="start" name="settings-outline" color="danger"></ion-icon>
+        <ion-label color="danger">Painel Admin</ion-label>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>Conta</ion-label>
+      </ion-item-divider>
+
+      <ion-item button (click)="logout()">
+        <ion-icon slot="start" name="log-out-outline" color="danger"></ion-icon>
+        <ion-label color="danger">Sair</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" class="ion-padding">
+  <!-- REFRESH -->
+  <ion-refresher slot="fixed" (ionRefresh)="carregarProdutos($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- BOTÕES DE ACESSO RÁPIDO -->
+  <div class="quick-access-buttons">
+    <ion-button expand="block" routerLink="/carrinho" fill="outline" size="small">
+      <ion-icon slot="start" name="cart-outline"></ion-icon>
+      Carrinho
+      <ion-badge *ngIf="quantidadeCarrinho > 0" color="danger" class="cart-badge">
+        {{ quantidadeCarrinho }}
+      </ion-badge>
+    </ion-button>
+
+    <ion-button expand="block" routerLink="/pedidos" fill="outline" size="small">
+      <ion-icon slot="start" name="receipt-outline"></ion-icon>
+      Pedidos
+    </ion-button>
+
+    <ion-button expand="block" routerLink="/perfil" fill="outline" size="small">
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      Perfil
+    </ion-button>
+
+    <ion-button expand="block" routerLink="/entrega" fill="outline" color="warning" size="small" *ngIf="isEntregador">
+      <ion-icon slot="start" name="bicycle-outline"></ion-icon>
+      Entregas
+    </ion-button>
+
+    <ion-button expand="block" routerLink="/admin" fill="outline" color="danger" size="small" *ngIf="isAdmin">
+      <ion-icon slot="start" name="settings-outline"></ion-icon>
+      Admin
+    </ion-button>
+  </div>
+
+  <!-- LOADING -->
+  <div *ngIf="carregando" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando produtos...</p>
+  </div>
+
+  <!-- GRID DE PRODUTOS -->
+  <ion-grid *ngIf="!carregando && produtos.length > 0">
+    <ion-row>
+      <ion-col size="6" size-md="4" size-lg="3" *ngFor="let p of produtos">
+        <ion-card (click)="abrirProduto(p)" class="produto-card">
+          <div class="produto-image-container">
+            <img [src]="p.imagem_principal_url" [alt]="p.nome" />
+            <ion-badge *ngIf="p.destaque" color="warning" class="badge-destaque">
+              Destaque
+            </ion-badge>
+            <ion-badge *ngIf="p.quantidade_estoque === 0" color="danger" class="badge-estoque">
+              Indisponível
+            </ion-badge>
+          </div>
+          
+          <ion-card-header>
+            <ion-card-title>{{ p.nome }}</ion-card-title>
+            <ion-card-subtitle>R$ {{ p.preco | number:'1.2-2' }}</ion-card-subtitle>
+          </ion-card-header>
+          
+          <ion-card-content>
+            <p>{{ p.descricao | slice: 0:60 }}{{ p.descricao?.length > 60 ? '...' : '' }}</p>
+            <ion-button 
+              expand="block" 
+              size="small" 
+              (click)="adicionarAoCarrinho(p); $event.stopPropagation()"
+              [disabled]="p.quantidade === 0">
+              <ion-icon slot="start" name="cart-outline"></ion-icon>
+              Adicionar
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- SEM PRODUTOS -->
+  <div *ngIf="!carregando && produtos.length === 0" class="vazio-container">
+    <ion-icon name="sad-outline"></ion-icon>
+    <h2>Nenhum produto disponível</h2>
+    <p>Volte mais tarde para conferir novidades!</p>
+  </div>
+</ion-content>

@@ -1,0 +1,30 @@
+.loading-container {
+  text-align: center;
+  margin-top: 60px;
+
+  ion-spinner {
+    margin-bottom: 12px;
+  }
+}
+
+.pedido-card {
+  border-radius: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vazio-container {
+  text-align: center;
+  margin-top: 100px;
+  color: #666;
+
+  ion-icon {
+    font-size: 80px;
+    color: #0079BF;
+  }
+
+  p {
+    font-size: 1.2em;
+    margin: 10px 0;
+  }
+}

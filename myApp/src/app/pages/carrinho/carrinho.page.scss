@@ -1,0 +1,46 @@
+ion-toolbar {
+  --background: linear-gradient(90deg, #003B73, #0079BF);
+  color: white;
+}
+
+ion-item {
+  --inner-padding-end: 0;
+  --padding-start: 0;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.carrinho-vazio {
+  text-align: center;
+  margin-top: 80px;
+  color: #666;
+
+  ion-icon {
+    font-size: 80px;
+    color: #0079BF;
+  }
+
+  p {
+    font-size: 1.2em;
+    margin: 10px 0;
+  }
+
+  ion-button {
+    margin-top: 20px;
+  }
+}
+
+ion-button {
+  margin-top: 25px;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #0079BF;
+}
+
+h2 {
+  font-size: 1rem;
+  color: #003B73;
+}

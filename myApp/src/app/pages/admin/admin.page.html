@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Admin - Produtos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Carregando produtos -->
+  <div *ngIf="carregando" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando produtos...</p>
+  </div>
+
+  <!-- Lista de produtos -->
+  <ion-list *ngIf="!carregando">
+    <ion-item *ngFor="let p of produtos">
+      <ion-label>
+        <h2>{{ p.nome }}</h2>
+        <p>R$ {{ p.preco | number:'1.2-2' }}</p>
+      </ion-label>
+      <ion-button slot="end" color="danger" (click)="deletar(p.id_produto)">
+        Excluir
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
